@@ -41,6 +41,8 @@ you can pass some properties in to customize the default behavior.
 ```html
 <script type="text/javascript">
   var _bftn_options = {
+    country_code_show: 'US', // or ['US','CU'] @type {string/Array}
+
     /*
      * Choose from 'take-action', 'capitol', 'onemorevote', 'countdown', 'glitch', 'money', 'stop', 'slow', 'without'.
      * Default is 'take-action'.
