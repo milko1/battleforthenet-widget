@@ -1,4 +1,4 @@
-(function() {
+(function () {
   if (typeof _bftn_options == "undefined") _bftn_options = {};
   if (typeof _bftn_options.iframe_base_path == "undefined") _bftn_options.iframe_base_path = 'https://widget.battleforthenet.com/iframe';
   if (typeof _bftn_options.animation == "undefined") _bftn_options.animation = 'main';
@@ -161,14 +161,63 @@
       }
     }
 
-    // Only show once per day.
-    _bftn_util.setCookie('_BFTN_WIDGET_VIEW', 'true', _bftn_options.viewCookieExpires);
+    // BEGIN: Milko: country code filtering
+    var init2 = function () {
+      // Only show once per day.
+      _bftn_util.setCookie('_BFTN_WIDGET_VIEW', 'true', _bftn_options.viewCookieExpires);
+      _bftn_util.injectCSS('_bftn_iframe_css', '#_bftn_wrapper { position: fixed; left: 0px; top: 0px; width: 100%; height: 100%; z-index: 20000; -webkit-overflow-scrolling: touch; overflow-y: auto; } #_bftn_iframe { width: 100%; height: 100%;  }');
 
-    _bftn_util.injectCSS('_bftn_iframe_css', '#_bftn_wrapper { position: fixed; left: 0px; top: 0px; width: 100%; height: 100%; z-index: 20000; -webkit-overflow-scrolling: touch; overflow-y: auto; } #_bftn_iframe { width: 100%; height: 100%;  }');
+      // Preload images before showing the animation
+      // preload();
+      init();
+    };
 
-    // Preload images before showing the animation
-    // preload();
-    init();
+    // _bftn_options.country_code_show: 'US' or ['US','CU']
+    if (_bftn_options.country_code_show && _bftn_options.country_code_show.length > 0) {
+      var _BFTN_WIDGET_COUNTRY_CODE = '_BFTN_WIDGET_COUNTRY_CODE';
+      _bftn_options_country_code_show = (_bftn_options.country_code_show.constructor === Array ? _bftn_options.country_code_show : [_bftn_options.country_code_show]);
+
+      var _country_code_cache = _bftn_util.getCookie(_BFTN_WIDGET_COUNTRY_CODE);
+      if (_country_code_cache && _country_code_cache.length > 0) {  // if country cached already
+        _bftn_util.log("Country cached='" + _country_code_cache + "'");
+        if (_bftn_options_country_code_show.indexOf(_country_code_cache) > -1)  // if country cached is in show array
+          init2();
+
+        return;
+      }
+
+      var request = new XMLHttpRequest();
+      request.open('GET', 'https://api.ipdata.co/');
+      request.setRequestHeader('Accept', 'application/json');
+
+      request.onreadystatechange = function () {
+        if (this.readyState === 4) {
+          if (this.status !== 200) {
+            console.log('Status:', this.status);
+            console.log('Headers:', this.getAllResponseHeaders());
+            console.log('Body:', this.responseText);
+            return;
+          }  
+          var json = JSON.parse(this.responseText);
+          var country_code = json.country_code;
+          _bftn_util.log("Country='" + country_code + "'");
+          _bftn_util.setCookie(_BFTN_WIDGET_COUNTRY_CODE, country_code, 30);  // 30 days expiration
+
+          _bftn_util.log("_bftn_options.country_code_show='" + _bftn_options.country_code_show + "'");
+          if (_bftn_options_country_code_show.indexOf(country_code) === -1)
+            return;
+
+          init2();
+        }
+      };
+    
+      request.send();
+    }
+    else {
+      init2();
+    }
+    // END: Milko: country code filtering
+
   }
 
   // Wait for DOM content to load.
