@@ -174,12 +174,14 @@
 
     // _bftn_options.country_code_show: 'US' or ['US','CU']
     if (_bftn_options.country_code_show && _bftn_options.country_code_show.length > 0) {
+      _bftn_util.log("_bftn_options.country_code_show='" + _bftn_options.country_code_show + "'");
+
       var _BFTN_WIDGET_COUNTRY_CODE = '_BFTN_WIDGET_COUNTRY_CODE';
       _bftn_options_country_code_show = (_bftn_options.country_code_show.constructor === Array ? _bftn_options.country_code_show : [_bftn_options.country_code_show]);
 
       var _country_code_cache = _bftn_util.getCookie(_BFTN_WIDGET_COUNTRY_CODE);
       if (_country_code_cache && _country_code_cache.length > 0) {  // if country cached already
-        _bftn_util.log("Country cached='" + _country_code_cache + "'");
+        _bftn_util.log("_country_code_cache='" + _country_code_cache + "'");
         if (_bftn_options_country_code_show.indexOf(_country_code_cache) > -1)  // if country cached is in show array
           init2();
 
@@ -200,14 +202,13 @@
           }  
           var json = JSON.parse(this.responseText);
           var country_code = json.country_code;
-          _bftn_util.log("Country='" + country_code + "'");
+          _bftn_util.log("country_code='" + country_code + "'");
           _bftn_util.setCookie(_BFTN_WIDGET_COUNTRY_CODE, country_code, 30);  // 30 days expiration
 
-          _bftn_util.log("_bftn_options.country_code_show='" + _bftn_options.country_code_show + "'");
-          if (_bftn_options_country_code_show.indexOf(country_code) === -1)
-            return;
+          if (country_code && country_code.length > 0 && _bftn_options_country_code_show.indexOf(country_code) > -1)
+            init2();
 
-          init2();
+          return;
         }
       };
     
