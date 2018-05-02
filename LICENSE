@@ -3,12 +3,8 @@ BSD 2-Clause License
 Copyright (c) 2017, Fight for the Future
 All rights reserved.
 
-20180501: @MilkoL: added option to show popup only for specified country(ies):
-  <script>
-  var _bftn_options={
-    country_code_show:'US' // or ['US','CU',...]
-  }
-  </script>
+20180501: @MilkoL: added config option to show popup only for specified country(ies) (country_code_show)
+20180502: @MilkoL: added config option to exclude bots (bots_exclude, bots_ua)
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
