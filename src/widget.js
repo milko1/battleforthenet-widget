@@ -211,17 +211,27 @@
             console.log('Status:', this.status);
             console.log('Headers:', this.getAllResponseHeaders());
             console.log('Body:', this.responseText);
-            return;
-          }  
-          var json = JSON.parse(this.responseText);
-          var country_code = json.country_code;
-          _bftn_util.log("country_code='" + country_code + "'");
-          _bftn_util.setCookie(_BFTN_WIDGET_COUNTRY_CODE, country_code, 30);  // 30 days expiration
 
-          if (country_code && country_code.length > 0 && _bftn_options_country_code_show.indexOf(country_code) > -1)
-            init2();
+            if (_bftn_options.country_code_show_after_error)
+              init2();
+          }
+          else {
+            try {
+              var json = JSON.parse(this.responseText);
+              var country_code = json.country_code;
+              _bftn_util.log("country_code='" + country_code + "'");
+              _bftn_util.setCookie(_BFTN_WIDGET_COUNTRY_CODE, country_code, 30);  // 30 days expiration
 
-          return;
+              if (country_code && country_code.length > 0 && _bftn_options_country_code_show.indexOf(country_code) > -1)
+                init2();
+            }
+            catch (err) {
+              console.log(err);
+
+              if (_bftn_options.country_code_show_after_error)
+                init2();
+            }
+          }
         }
       };
     
