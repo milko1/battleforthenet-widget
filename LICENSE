@@ -5,6 +5,7 @@ All rights reserved.
 
 20180501: @MilkoL: added config option to show popup only for specified country(ies) (country_code_show)
 20180502: @MilkoL: added config option to exclude bots (bots_exclude, bots_ua)
+20180814: @MilkoL: added config option API key for IP info (ipinfo_key [ie: ipdata.co])
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:

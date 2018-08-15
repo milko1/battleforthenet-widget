@@ -47,6 +47,7 @@ you can pass some properties in to customize the default behavior.
       unless country_code_show_after_error (see below) is true (defaults to false), then will always show popup after this error.
     */
     country_code_show: 'US',  // or ['US','CU'] @type {string/Array}
+    ipinfo_key: 'xxxx',       // (optional) API key for IP info [ie: ipdata.co] @type {string}
     country_code_show_after_error: false, // @type {boolean}
 
     bots_exclude: true,       // @type {boolean}

@@ -5,27 +5,30 @@
   "repository": "https://github.com/fightforthefuture/battleforthenet-widget.git",
   "license": "BSD-2-Clause",
   "devDependencies": {
-    "autoprefixer": "^7.1.5",
+    "autoprefixer": "^7.2.6",
     "cssnano": "^3.10.0",
     "del": "^3.0.0",
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.1",
     "gulp-htmlmin": "^3.0.0",
     "gulp-imagemin": "^3.4.0",
-    "gulp-inline-source": "^3.1.0",
+    "gulp-inline-source": "^3.2.0",
     "gulp-insert": "^0.5.0",
-    "gulp-postcss": "^7.0.0",
-    "gulp-rename": "^1.2.2",
+    "gulp-postcss": "^7.0.1",
+    "gulp-rename": "^1.4.0",
     "gulp-replace": "^0.6.1",
-    "gulp-sourcemaps": "^2.6.1",
-    "gulp-uglify": "^3.0.0",
-    "postcss-flexbugs-fixes": "^3.2.0",
-    "pump": "^1.0.2",
-    "run-sequence": "^2.2.0"
+    "gulp-sourcemaps": "^2.6.4",
+    "gulp-uglify": "^3.0.1",
+    "postcss-flexbugs-fixes": "^3.3.1",
+    "pump": "^1.0.3",
+    "run-sequence": "^2.2.1"
   },
   "scripts": {
     "build": "gulp",
     "watch": "gulp watch",
     "deploy": "aws s3 sync dist s3://widget.battleforthenet.com --delete"
+  },
+  "dependencies": {
+    "natives": "^1.1.4"
   }
 }

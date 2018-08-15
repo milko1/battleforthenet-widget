@@ -202,7 +202,8 @@
       }
 
       var request = new XMLHttpRequest();
-      request.open('GET', 'https://api.ipdata.co/');
+      var api_key = _bftn_options.ipinfo_key ? '?api-key=' + _bftn_options.ipinfo_key : '';
+      request.open('GET', 'https://api.ipdata.co/' + api_key);
       request.setRequestHeader('Accept', 'application/json');
 
       request.onreadystatechange = function () {
